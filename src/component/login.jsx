@@ -1,8 +1,12 @@
-import { useState , useEffect } from 'react';
+import { useState  } from 'react';
 import {Link} from 'react-router-dom'
+import React from 'react';
+import axios from 'axios'
+
 
 const Login =()=>{
-    let [loginemail,setLogInName]=useState(null);
+    const [logInEmail,setLogInEmail]=useState(null);
+    const [logInPassword,setLogInPassword]=useState(null);
 
    
     
@@ -10,12 +14,10 @@ const Login =()=>{
     function initiate(e)
     {
         e.preventDefault();
-        let email=document.querySelector("#email").value;
-        let password=document.querySelector("#password").value; 
-        setLogInName(email);
-        console.log(loginemail)
-        console.log(email)
-        console.log(password)
+        axios.post("http://localhost:3001/login",{logInEmail,logInPassword})
+        .then(result=> console.log(result))
+        .catch(err=>console.log(err))
+        
         
     }
 
@@ -24,10 +26,10 @@ const Login =()=>{
             <h1>Login</h1>
             <form onSubmit={initiate}>
                 <label htmlFor="email">Email: </label>  
-                <input type="text" name="email" id="email"/><br/>
+                <input type="email" name="email" id="email" onChange={(e)=>setLogInEmail(e.target.value)}/><br/>
 
                 <label htmlFor="password">Password: </label>
-                <input type="password" name="password" id="password"/><br/>
+                <input type="password" name="password" id="password" onChange={(e)=>setLogInPassword(e.target.value)}/><br/>
 
                 <button type="submit">Log in</button>
 
@@ -36,7 +38,7 @@ const Login =()=>{
                 </Link>
 
                 <Link to="/forgotpassword">
-                <a href='https://www.google.com/webhp?hl=en&sa=X&ved=0ahUKEwjGl7KV2_aDAxXOoGMGHdk0Ba0QPAgJ'>Forgot Password</a>
+                Forgot Password
                 </Link>
             </form>
         </div>

@@ -1,4 +1,10 @@
+import React from 'react';
+import { useState } from 'react';
 const Signup =()=>{
+    const [signInName,setLogInName]=useState(null);
+    const [signInEmail,setLogInEmail]=useState(null);
+    const [signInPassword1,setLogInPassword1]=useState(null);
+    const [signInPassword2,setLogInPassword2]=useState(null);
 
     function initiate(e)
     {
@@ -21,8 +27,8 @@ const Signup =()=>{
                 <label htmlFor="name">Name </label>  
                 <input type="text" name="name" id="name"/><br/>
 
-                <label htmlFor="email">Email: </label>  
-                <input type="email" name="email" id="email"/><br/>
+                <label htmlFor="signEmail">Email: </label>  
+                <input type="email" name="signEmail" id="signEmail"/><br/>
 
                 <label htmlFor="dob">Date of birth: </label>  
                 <input type="date" name="dob" id="dob"/><br/>
