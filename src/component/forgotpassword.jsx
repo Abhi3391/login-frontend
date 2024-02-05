@@ -1,16 +1,18 @@
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom'
+import { useState} from 'react';
 import React from 'react';
 
 
-const Forgotpassword =()=>{
+
+const ForgotPassword =()=>{
+
+    const [name,setName]=useState(null);
 
     function initiate(e)
     {
         e.preventDefault();
-        let username=document.querySelector("#email").value;
-        // let password=document.querySelector("#password").value; 
-        console.log(username)
-        // console.log(password)
+        console.log(name)
+        
         
     }
 
@@ -20,7 +22,7 @@ const Forgotpassword =()=>{
             <form onSubmit={initiate}>
 
                 <label htmlFor="email">Email: </label>  
-                <input type="text" name="email" id="email"/><br/>
+                <input type="email" name="email" id="email" onChange={(e)=>setName(e.target.value)}/><br/>
                 
                 
                 <button type="submit">Submit</button>
@@ -30,4 +32,4 @@ const Forgotpassword =()=>{
         </div>
     );
 }
-export default Forgotpassword    ;
+export default ForgotPassword;
