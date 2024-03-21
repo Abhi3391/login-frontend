@@ -1,54 +1,68 @@
-import { useState  } from 'react';
-import {Link, useNavigate} from 'react-router-dom'
-import React from 'react';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom'
+import { Box, Heading, Button, Input, Stack, FormControl, FormLabel } from '@chakra-ui/react'
 import axios from 'axios'
 
-
-const Login = ()=>{
-    const [email,setEmail]=useState(null);
-    const [password,setPassword]=useState(null);
+const Login = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const initiate = async(e)=>
-    {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log(email);
-        const response = await axios.post("http://localhost:3001/login",{email,password})
-        if(response.data === "email matched"){
+        console.log("init part", email);
+        const response = await axios.post("http://localhost:3001/login", { email, password },{withCredentials: true})
+        console.log("response", response)
+        if (response.data === "login successful") {
             navigate("/");
-        }else{
+            console.log("valid Login")
+        } else if(response.data.data=="Password is incorrect"){
+            alert("Wrong Password! Try Again.");
+        }
+        else{
             console.log("Invalid Login")
         }
-    //     .then(result=> {
-
-    //         history("/");
-    //         console.log("result",result)
-    //     })
-    //     .catch(err=>console.log(err))  
-    // }
     }
+
     return (
-        <div className="container">
-            <h1>Login</h1>
-            <form onSubmit={initiate}>
-                <label htmlFor="email">Email: </label>  
-                <input type="email" name="email" id="email" onChange={(e)=>setEmail(e.target.value)}/><br/>
+        <Box>
+            <Heading as="h1">Login</Heading>
+            <form onSubmit={handleSubmit}>
+                <Stack spacing={3}>
 
-                <label htmlFor="password">Password: </label>
-                <input type="password" name="password" id="password" onChange={(e)=>setPassword(e.target.value)}/><br/>
+                    <FormControl>
+                        <FormLabel htmlFor="email">Email:</FormLabel>
+                        <Input
+                            type="email"
+                            id="email"
+                            placeholder="Enter your email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </FormControl>
 
-                <button type="submit">Log in</button>
+                    <FormControl>
+                        <FormLabel htmlFor="password">Password:</FormLabel>
+                        <Input
+                            type="password"
+                            id="password"
+                            placeholder="Enter your password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </FormControl>
 
-                <Link to="/signup">
-                <button >Sign up</button>
-                </Link>
+                    <Button type="submit" colorScheme="blue">Log in</Button>
 
-                <Link to="/forgotPassword">
-                Forgot Password
-                </Link>
+                    <Link to="/signup">
+                        <Button variant="outline">Sign up</Button>
+                    </Link>
+
+                    <Link to="/forgotPassword">Forgot Password</Link>
+                </Stack>
             </form>
-        </div>
+        </Box>
     );
 }
 
